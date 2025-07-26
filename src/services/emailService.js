@@ -27,5 +27,23 @@ class EmailService {
             console.log(error);
         }
     }
+
+    async sendConfirmationEmail(ticket) {
+        try {
+            console.log("sending confirmation email");
+            const response = await this.sendBasicEmail(
+                ticket.recepientEmail,
+                ticket.subject,
+                `<h3>Reminder: Your Flight Details</h3>
+                <p>This is a confirmation regarding: <strong>${ticket.content}</strong></p>
+                <p>We hope you have a pleasant journey!</p>`
+            );
+            console.log("confirmation email sent");
+            return response;   
+        } catch (error) {
+            console.error('Error sending confirmation email:', error);
+            throw new Error('Failed to send confirmation email');
+        }
+    }
 }
 module.exports = EmailService;
